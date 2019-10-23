@@ -9,21 +9,32 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
     SensorManager sMgr;
     TextView sensorText;
+    List<Sensor> mList;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         sensorText=(TextView) findViewById(R.id.sensorText);
+
+        initializeAndGetAllSensors();
+        printAllSensorsOfDevice();
+
+    }
+    private void initializeAndGetAllSensors()
+    {
         sMgr=(SensorManager) this.getSystemService(SENSOR_SERVICE);
-        List<Sensor> mList= sMgr.getSensorList(Sensor.TYPE_ALL);
+        mList= sMgr.getSensorList(Sensor.TYPE_ALL);
+    }
+    public void printAllSensorsOfDevice()
+    {
         for (Sensor sensor : mList)
         {
             sensorText.append("\n" + sensor.getName()+ "\n" + sensor.getVendor() + "\n" + sensor.getVersion());
         }
     }
-
 }
